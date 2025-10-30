@@ -1,0 +1,899 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Free online video compression tool. Reduce video file size while maintaining quality.">
+    <title>VideoCompress Pro - Colorful</title>
+    <style>
+        :root {
+            --primary: #FF6B6B;
+            --primary-dark: #FF5252;
+            --secondary: #4ECDC4;
+            --accent: #45B7D1;
+            --dark: #556270;
+            --light: #F7F9F9;
+            --gray: #96CEB4;
+            --success: #FFE66D;
+            --warning: #FF9A76;
+            --purple: #A593E0;
+            --pink: #FF8BA7;
+            --border-radius: 12px;
+            --shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: #2C3E50;
+            line-height: 1.3;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 10px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.8rem 0;
+            border-bottom: 3px solid var(--primary);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+        }
+
+        .logo {
+            font-size: 1.3rem;
+            font-weight: 800;
+            display: flex;
+            align-items: center;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .logo i {
+            margin-right: 8px;
+            font-size: 1.5rem;
+        }
+
+        .main-content {
+            display: flex;
+            gap: 15px;
+            margin: 10px 0;
+            flex: 1;
+            max-height: calc(100vh - 150px);
+        }
+
+        .tool-section {
+            flex: 1;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            border: 2px solid var(--secondary);
+            box-shadow: var(--shadow);
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+            backdrop-filter: blur(10px);
+        }
+
+        .ad-section {
+            width: 180px;
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: var(--border-radius);
+            padding: 0.8rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            border: 2px solid var(--accent);
+            box-shadow: var(--shadow);
+            backdrop-filter: blur(10px);
+        }
+
+        .ad-unit {
+            width: 100%;
+            height: 150px;
+            background: linear-gradient(45deg, var(--purple), var(--accent));
+            border: 2px dashed var(--success);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-bottom: 0.8rem;
+            border-radius: var(--border-radius);
+            color: white;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .ad-label {
+            font-size: 0.7rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        h1 {
+            margin-bottom: 0.8rem;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-align: center;
+            font-size: 1.3rem;
+            font-weight: 800;
+        }
+
+        .upload-area {
+            border: 3px dashed var(--primary);
+            border-radius: var(--border-radius);
+            padding: 1.2rem;
+            text-align: center;
+            margin-bottom: 1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            background: linear-gradient(135deg, rgba(255, 107, 107, 0.1), rgba(165, 147, 224, 0.1));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .upload-area::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .upload-area:hover::before {
+            left: 100%;
+        }
+
+        .upload-area:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+            border-color: var(--secondary);
+        }
+
+        .upload-area.active {
+            border-color: var(--success);
+            background: linear-gradient(135deg, rgba(255, 230, 109, 0.2), rgba(78, 205, 196, 0.2));
+        }
+
+        .upload-icon {
+            font-size: 2rem;
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 0.5rem;
+        }
+
+        .upload-area h3 {
+            font-size: 0.9rem;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+            font-weight: 600;
+        }
+
+        .upload-area p {
+            font-size: 0.8rem;
+            margin-bottom: 0.5rem;
+            color: var(--dark);
+        }
+
+        .upload-status {
+            margin-top: 0.5rem;
+            padding: 0.3rem;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            display: none;
+            font-size: 0.8rem;
+        }
+
+        .upload-status.success {
+            background: linear-gradient(45deg, var(--success), var(--secondary));
+            color: #2C3E50;
+            display: block;
+        }
+
+        .upload-status.error {
+            background: linear-gradient(45deg, var(--primary), var(--warning));
+            color: white;
+            display: block;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, var(--primary), var(--purple));
+            color: white;
+            border: none;
+            padding: 0.6rem 1rem;
+            border-radius: 25px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: var(--transition);
+            font-size: 0.8rem;
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 107, 107, 0.4);
+            background: linear-gradient(45deg, var(--purple), var(--primary));
+        }
+
+        .btn:disabled {
+            background: linear-gradient(45deg, #CCCCCC, #999999);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        .compression-categories {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 8px;
+            margin: 0.8rem 0;
+        }
+
+        .category {
+            text-align: center;
+            padding: 0.6rem 0.3rem;
+            border-radius: var(--border-radius);
+            background: white;
+            transition: var(--transition);
+            cursor: pointer;
+            border: 2px solid transparent;
+            min-height: 70px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .category::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: var(--primary);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .category:hover::before {
+            transform: scaleX(1);
+        }
+
+        .category:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .category.active {
+            background: linear-gradient(135deg, var(--primary), var(--purple));
+            color: white;
+            border-color: var(--success);
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .category.active::before {
+            background: var(--success);
+            transform: scaleX(1);
+        }
+
+        .category-icon {
+            font-size: 1.1rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .category-name {
+            font-weight: 700;
+            font-size: 0.75rem;
+            margin-bottom: 0.1rem;
+        }
+
+        .category-desc {
+            font-size: 0.65rem;
+            opacity: 0.9;
+        }
+
+        .slider-container {
+            margin: 0.8rem 0;
+            background: white;
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .slider-labels {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+            color: var(--dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+
+        .slider {
+            width: 100%;
+            height: 8px;
+            -webkit-appearance: none;
+            appearance: none;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            outline: none;
+            border-radius: 10px;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
+        }
+
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background: linear-gradient(45deg, var(--purple), var(--primary));
+            cursor: pointer;
+            border: 3px solid white;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+            transition: var(--transition);
+        }
+
+        .slider::-webkit-slider-thumb:hover {
+            transform: scale(1.1);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.4);
+        }
+
+        .file-info {
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            margin: 0.6rem 0;
+            border: 2px solid var(--accent);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            font-size: 0.8rem;
+        }
+
+        .info-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 0.3rem;
+            padding: 0.2rem 0;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .info-row:last-child {
+            border-bottom: none;
+        }
+
+        .progress-container {
+            display: none;
+            margin: 1rem 0;
+            text-align: center;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .progress-bar {
+            height: 10px;
+            background: linear-gradient(90deg, #e0e0e0, #f5f5f5);
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 0.8rem 0;
+            box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--success));
+            width: 0%;
+            transition: width 0.3s ease;
+            border-radius: 10px;
+        }
+
+        .preview-section {
+            display: none;
+            margin-top: 1rem;
+            background: white;
+            padding: 1rem;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-container {
+            display: flex;
+            gap: 10px;
+            margin: 0.6rem 0;
+        }
+
+        .preview-box {
+            flex: 1;
+            text-align: center;
+            background: linear-gradient(135deg, #ffffff, #f8f9fa);
+            padding: 0.8rem;
+            border-radius: var(--border-radius);
+            border: 2px solid var(--accent);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .preview-video {
+            width: 100%;
+            max-width: 100%;
+            border-radius: var(--border-radius);
+            background: #000;
+            max-height: 120px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 0.8rem 0;
+            margin-top: auto;
+            border-top: 3px solid var(--secondary);
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .copyright {
+            text-align: center;
+            color: var(--dark);
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                flex-direction: column;
+                max-height: calc(100vh - 120px);
+            }
+            
+            .ad-section {
+                width: 100%;
+                flex-direction: row;
+                justify-content: space-around;
+                padding: 0.5rem;
+            }
+            
+            .ad-unit {
+                width: 45%;
+                height: 80px;
+                margin-bottom: 0;
+            }
+            
+            .compression-categories {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        /* Compact layout adjustments */
+        .compact-layout {
+            max-height: 100vh;
+            overflow: hidden;
+        }
+        
+        .tool-section {
+            max-height: 100%;
+            overflow-y: auto;
+        }
+        
+        /* Hide elements to save space */
+        .seo-content, nav {
+            display: none;
+        }
+
+        /* Colorful category backgrounds */
+        .category[data-level="social"] { border-left: 4px solid var(--primary); }
+        .category[data-level="email"] { border-left: 4px solid var(--secondary); }
+        .category[data-level="streaming"] { border-left: 4px solid var(--accent); }
+        .category[data-level="presentation"] { border-left: 4px solid var(--success); }
+        .category[data-level="web"] { border-left: 4px solid var(--purple); }
+        .category[data-level="storage"] { border-left: 4px solid var(--pink); }
+        .category[data-level="archive"] { border-left: 4px solid var(--warning); }
+        .category[data-level="original"] { border-left: 4px solid var(--gray); }
+    </style>
+</head>
+<body class="compact-layout">
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <i>🎬</i> VideoCompress Pro
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="main-content">
+            <section class="tool-section">
+                <h1>Video Compression Tool</h1>
+                
+                <div class="upload-area" id="uploadArea">
+                    <div class="upload-icon">📁</div>
+                    <h3>Drag & Drop your video</h3>
+                    <p>here</p>
+                    <p>or</p>
+                    <button class="btn" id="browseBtn">Browse Files</button>
+                    <input type="file" id="fileInput" accept="video/*" style="display: none;">
+                    <div class="upload-status" id="uploadStatus"></div>
+                </div>
+
+                <div class="compression-categories">
+                    <div class="category active" data-level="social" data-compression="90">
+                        <div class="category-icon">📱</div>
+                        <div class="category-name">Social Media</div>
+                        <div class="category-desc">Max compression</div>
+                    </div>
+                    <div class="category" data-level="email" data-compression="80">
+                        <div class="category-icon">✉️</div>
+                        <div class="category-name">Email</div>
+                        <div class="category-desc">High compression</div>
+                    </div>
+                    <div class="category" data-level="streaming" data-compression="40">
+                        <div class="category-icon">📺</div>
+                        <div class="category-name">Streaming</div>
+                        <div class="category-desc">Better quality</div>
+                    </div>
+                    <div class="category" data-level="presentation" data-compression="60">
+                        <div class="category-icon">📊</div>
+                        <div class="category-name">Presentation</div>
+                        <div class="category-desc">Balanced quality</div>
+                    </div>
+                    <div class="category" data-level="web" data-compression="70">
+                        <div class="category-icon">🌐</div>
+                        <div class="category-name">Web Use</div>
+                        <div class="category-desc">Medium compression</div>
+                    </div>
+                    <div class="category" data-level="storage" data-compression="50">
+                        <div class="category-icon">💾</div>
+                        <div class="category-name">Storage Save</div>
+                        <div class="category-desc">Good quality</div>
+                    </div>
+                    <div class="category" data-level="archive" data-compression="30">
+                        <div class="category-icon">📦</div>
+                        <div class="category-name">Archive</div>
+                        <div class="category-desc">High quality</div>
+                    </div>
+                    <div class="category" data-level="original" data-compression="10">
+                        <div class="category-icon">🎯</div>
+                        <div class="category-name">Near Original</div>
+                        <div class="category-desc">Minimal compression</div>
+                    </div>
+                </div>
+                
+                <div class="slider-container">
+                    <div class="slider-labels">
+                        <span>Max Compression</span>
+                        <span>Balanced</span>
+                        <span>Best Quality</span>
+                    </div>
+                    <input type="range" min="1" max="100" value="50" class="slider" id="compressionSlider">
+                </div>
+
+                <div class="file-info" id="fileInfo" style="display: none;">
+                    <div class="info-row">
+                        <span>File Name:</span>
+                        <span id="fileName">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Original Size:</span>
+                        <span id="fileSize">-</span>
+                    </div>
+                    <div class="info-row">
+                        <span>Estimated Size:</span>
+                        <span id="compressedSize">-</span>
+                    </div>
+                </div>
+
+                <div class="progress-container" id="progressContainer">
+                    <h3 style="font-size: 0.9rem; color: var(--dark);">Compressing Video...</h3>
+                    <div class="progress-bar">
+                        <div class="progress" id="progressBar"></div>
+                    </div>
+                    <p id="progressText" style="font-size: 0.8rem; color: var(--dark); font-weight: 600;">0%</p>
+                </div>
+
+                <div class="preview-section" id="previewSection">
+                    <h2 style="font-size: 1rem; color: var(--dark);">Preview</h2>
+                    <div class="preview-container">
+                        <div class="preview-box">
+                            <h3 style="font-size: 0.8rem; color: var(--dark);">Original Video</h3>
+                            <video controls class="preview-video" id="originalVideo"></video>
+                            <p id="originalInfo" style="margin-top: 5px; font-size: 0.7rem; color: var(--dark);"></p>
+                        </div>
+                        <div class="preview-box">
+                            <h3 style="font-size: 0.8rem; color: var(--dark);">Compressed Video</h3>
+                            <video controls class="preview-video" id="compressedVideo"></video>
+                            <p id="compressedInfo" style="margin-top: 5px; font-size: 0.7rem; color: var(--dark);"></p>
+                        </div>
+                    </div>
+                    <button class="btn" id="downloadBtn" style="width: 100%; margin-top: 10px; background: linear-gradient(45deg, var(--secondary), var(--accent));">Download Compressed Video</button>
+                </div>
+
+                <button class="btn" id="compressBtn" style="display: none; width: 100%;" disabled>Compress Video</button>
+            </section>
+
+            <aside class="ad-section">
+                <div class="ad-unit">
+                    Ad Space
+                </div>
+                <div class="ad-label">Advertisement</div>
+                
+                <div class="ad-unit">
+                    Ad Space
+                </div>
+                <div class="ad-label">Advertisement</div>
+            </aside>
+        </div>
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="copyright">
+                &copy; 2023 VideoCompress Pro. All rights reserved.
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fileInput = document.getElementById('fileInput');
+            const uploadArea = document.getElementById('uploadArea');
+            const browseBtn = document.getElementById('browseBtn');
+            const uploadStatus = document.getElementById('uploadStatus');
+            const compressionSlider = document.getElementById('compressionSlider');
+            const categories = document.querySelectorAll('.category');
+            const compressBtn = document.getElementById('compressBtn');
+            const fileInfo = document.getElementById('fileInfo');
+            const fileName = document.getElementById('fileName');
+            const fileSize = document.getElementById('fileSize');
+            const compressedSize = document.getElementById('compressedSize');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const previewSection = document.getElementById('previewSection');
+            const originalVideo = document.getElementById('originalVideo');
+            const compressedVideo = document.getElementById('compressedVideo');
+            const originalInfo = document.getElementById('originalInfo');
+            const compressedInfo = document.getElementById('compressedInfo');
+            const downloadBtn = document.getElementById('downloadBtn');
+            
+            let selectedFile = null;
+            let currentCompression = 50;
+            
+            // Fixed: Proper event listener for browse button
+            browseBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                fileInput.click();
+            });
+            
+            // Fixed: Proper file input change handler
+            fileInput.addEventListener('change', function(e) {
+                console.log('File input changed'); // Debug log
+                if (e.target.files && e.target.files.length > 0) {
+                    handleFileSelection(e.target.files[0]);
+                }
+            });
+            
+            // Drag and drop functionality
+            uploadArea.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = 'rgba(255, 107, 107, 0.1)';
+            });
+            
+            uploadArea.addEventListener('dragleave', function() {
+                uploadArea.style.backgroundColor = '';
+            });
+            
+            uploadArea.addEventListener('drop', function(e) {
+                e.preventDefault();
+                uploadArea.style.backgroundColor = '';
+                
+                if (e.dataTransfer.files && e.dataTransfer.files.length > 0) {
+                    handleFileSelection(e.dataTransfer.files[0]);
+                }
+            });
+            
+            // Click on upload area to trigger file input
+            uploadArea.addEventListener('click', function(e) {
+                // Don't trigger if the click was on the button
+                if (e.target !== browseBtn && !browseBtn.contains(e.target)) {
+                    fileInput.click();
+                }
+            });
+            
+            // Compression slider functionality
+            compressionSlider.addEventListener('input', function() {
+                currentCompression = parseInt(compressionSlider.value);
+                updateCompressedSize();
+                updateActiveCategory();
+            });
+            
+            // Category selection
+            categories.forEach(category => {
+                category.addEventListener('click', function() {
+                    // Remove active class from all categories
+                    categories.forEach(cat => cat.classList.remove('active'));
+                    
+                    // Add active class to clicked category
+                    this.classList.add('active');
+                    
+                    // Update slider based on category
+                    const compressionValue = parseInt(this.getAttribute('data-compression'));
+                    compressionSlider.value = compressionValue;
+                    currentCompression = compressionValue;
+                    
+                    updateCompressedSize();
+                });
+            });
+            
+            // Compress button functionality
+            compressBtn.addEventListener('click', function() {
+                if (!selectedFile) {
+                    showUploadStatus('Please select a video file first.', 'error');
+                    return;
+                }
+                
+                // Show progress container
+                progressContainer.style.display = 'block';
+                compressBtn.style.display = 'none';
+                
+                // Simulate compression process
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        
+                        // Show preview after compression
+                        setTimeout(() => {
+                            progressContainer.style.display = 'none';
+                            previewSection.style.display = 'block';
+                            
+                            // Set video sources
+                            originalVideo.src = URL.createObjectURL(selectedFile);
+                            compressedVideo.src = URL.createObjectURL(selectedFile);
+                            
+                            // Update video info
+                            originalInfo.textContent = `Original: ${formatFileSize(selectedFile.size)}`;
+                            const estimatedSize = selectedFile.size * (1 - (currentCompression / 100) * 0.7);
+                            compressedInfo.textContent = `Compressed: ${formatFileSize(estimatedSize)}`;
+                        }, 500);
+                    }
+                    
+                    progressBar.style.width = progress + '%';
+                    progressText.textContent = Math.round(progress) + '%';
+                }, 200);
+            });
+            
+            // Download button functionality
+            downloadBtn.addEventListener('click', function() {
+                if (!selectedFile) {
+                    alert('Please compress a video first.');
+                    return;
+                }
+                alert('Download functionality would be implemented in a real application. Your compressed video is ready!');
+            });
+            
+            // Function to handle file selection
+            function handleFileSelection(file) {
+                console.log('Handling file:', file); // Debug log
+                
+                if (!file.type.startsWith('video/')) {
+                    showUploadStatus('Please select a valid video file (MP4, AVI, MOV, etc.).', 'error');
+                    return;
+                }
+                
+                selectedFile = file;
+                
+                // Update UI to show successful upload
+                uploadArea.classList.add('active');
+                showUploadStatus('Video uploaded successfully! Ready to compress.', 'success');
+                compressBtn.disabled = false;
+                
+                // Update file info
+                fileName.textContent = file.name.length > 20 ? file.name.substring(0, 17) + '...' : file.name;
+                fileSize.textContent = formatFileSize(file.size);
+                updateCompressedSize();
+                
+                // Show file info and compress button
+                fileInfo.style.display = 'block';
+                compressBtn.style.display = 'block';
+                
+                console.log('File processed successfully'); // Debug log
+            }
+            
+            // Function to show upload status
+            function showUploadStatus(message, type) {
+                uploadStatus.textContent = message;
+                uploadStatus.className = 'upload-status';
+                uploadStatus.classList.add(type);
+            }
+            
+            // Function to update compressed size estimate
+            function updateCompressedSize() {
+                if (!selectedFile) return;
+                
+                const compressionRatio = 1 - (currentCompression / 100) * 0.7;
+                const estimatedSize = selectedFile.size * compressionRatio;
+                
+                compressedSize.textContent = formatFileSize(estimatedSize);
+            }
+            
+            // Function to update active category based on slider value
+            function updateActiveCategory() {
+                categories.forEach(cat => cat.classList.remove('active'));
+                
+                let matchedCategory = null;
+                
+                if (currentCompression >= 85) {
+                    matchedCategory = document.querySelector('.category[data-level="social"]');
+                } else if (currentCompression >= 75) {
+                    matchedCategory = document.querySelector('.category[data-level="email"]');
+                } else if (currentCompression >= 65) {
+                    matchedCategory = document.querySelector('.category[data-level="web"]');
+                } else if (currentCompression >= 55) {
+                    matchedCategory = document.querySelector('.category[data-level="presentation"]');
+                } else if (currentCompression >= 45) {
+                    matchedCategory = document.querySelector('.category[data-level="storage"]');
+                } else if (currentCompression >= 35) {
+                    matchedCategory = document.querySelector('.category[data-level="streaming"]');
+                } else if (currentCompression >= 20) {
+                    matchedCategory = document.querySelector('.category[data-level="archive"]');
+                } else {
+                    matchedCategory = document.querySelector('.category[data-level="original"]');
+                }
+                
+                if (matchedCategory) {
+                    matchedCategory.classList.add('active');
+                }
+            }
+            
+            // Helper function to format file size
+            function formatFileSize(bytes) {
+                if (bytes === 0) return '0 Bytes';
+                
+                const k = 1024;
+                const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+            }
+        });
+    </script>
+</body>
+</html>
