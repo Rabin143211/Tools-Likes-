@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Image Rotator & Flipper Tool</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6C63FF;
+            --secondary: #FF6584;
+            --accent: #36D1DC;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --light: #F8F9FA;
+            --dark: #343A40;
+            --radius: 12px;
+            --shadow: 0 6px 12px rgba(0,0,0,0.1);
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            width: 100%;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--accent));
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 1.8rem;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .tool-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .tool-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .upload-section {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+        }
+
+        .preview-section {
+            background: var(--light);
+            border-radius: var(--radius);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title i {
+            font-size: 1.1rem;
+        }
+
+        .upload-area {
+            border: 2px dashed var(--primary);
+            border-radius: var(--radius);
+            padding: 30px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-bottom: 15px;
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        .upload-area:hover {
+            background: rgba(108, 99, 255, 0.1);
+        }
+
+        .upload-area i {
+            font-size: 36px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .upload-area p {
+            color: var(--dark);
+            margin-bottom: 10px;
+            font-size: 0.9rem;
+        }
+
+        .btn {
+            display: inline-block;
+            background: var(--primary);
+            color: white;
+            padding: 8px 16px;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 500;
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .btn-secondary {
+            background: var(--secondary);
+        }
+
+        .btn-success {
+            background: var(--success);
+        }
+
+        .btn-warning {
+            background: var(--warning);
+        }
+
+        .btn-accent {
+            background: var(--accent);
+        }
+
+        .controls {
+            margin-top: 15px;
+        }
+
+        .control-group {
+            margin-bottom: 15px;
+        }
+
+        .control-group h3 {
+            font-size: 1rem;
+            margin-bottom: 8px;
+            color: var(--dark);
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .control-group h3 i {
+            color: var(--primary);
+        }
+
+        .rotation-controls, .flip-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .rotation-btn, .flip-btn {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+        }
+
+        .advanced-flip-controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 8px;
+        }
+
+        .advanced-flip-btn {
+            font-size: 0.8rem;
+            padding: 6px 10px;
+        }
+
+        .preset-controls {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 8px;
+        }
+
+        .preset-btn {
+            font-size: 0.75rem;
+            padding: 6px 5px;
+        }
+
+        .compression-controls {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .compression-option {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            cursor: pointer;
+            transition: var(--transition);
+            font-size: 0.85rem;
+        }
+
+        .compression-option:hover {
+            border-color: var(--primary);
+            background: rgba(108, 99, 255, 0.05);
+        }
+
+        .compression-option input {
+            margin-right: 8px;
+        }
+
+        .compression-option label {
+            flex: 1;
+            cursor: pointer;
+        }
+
+        .compression-details {
+            font-size: 0.75rem;
+            color: var(--dark);
+            opacity: 0.7;
+        }
+
+        .image-preview {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed var(--accent);
+            border-radius: var(--radius);
+            margin-bottom: 15px;
+            min-height: 200px;
+            background: white;
+            overflow: hidden;
+        }
+
+        .image-preview img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            transition: transform 0.5s ease;
+        }
+
+        .image-info {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            padding: 12px;
+            background: white;
+            border-radius: var(--radius);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-item {
+            text-align: center;
+        }
+
+        .info-label {
+            font-size: 0.75rem;
+            color: var(--dark);
+            opacity: 0.7;
+        }
+
+        .info-value {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .action-buttons .btn {
+            flex: 1;
+            padding: 10px;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: var(--dark);
+            opacity: 0.7;
+            font-size: 0.8rem;
+            border-top: 1px solid #eee;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        .flip-icon {
+            font-size: 1rem;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 576px) {
+            .image-info {
+                flex-direction: column;
+                gap: 8px;
+            }
+            
+            .action-buttons {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 1.5rem;
+            }
+            
+            .preset-controls {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        .color-bar {
+            height: 6px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent), var(--success));
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="color-bar"></div>
+        <header>
+            <h1><i class="fas fa-magic"></i> Image Rotator & Flipper</h1>
+            <p>Transform your images with style - rotate, flip, and compress in seconds</p>
+        </header>
+
+        <div class="tool-container">
+            <div class="upload-section">
+                <h2 class="section-title"><i class="fas fa-sliders-h"></i> Controls</h2>
+                
+                <div class="upload-area" id="uploadArea">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <p>Drag & drop or click to browse</p>
+                    <input type="file" id="fileInput" accept="image/*" class="hidden">
+                    <button class="btn" id="browseBtn">Select Image</button>
+                </div>
+                
+                <div class="controls">
+                    <div class="control-group">
+                        <h3><i class="fas fa-sync"></i> Rotation</h3>
+                        <div class="rotation-controls">
+                            <button class="btn rotation-btn" data-degrees="-90"><i class="fas fa-undo"></i> 90° Left</button>
+                            <button class="btn rotation-btn" data-degrees="90"><i class="fas fa-redo"></i> 90° Right</button>
+                            <button class="btn btn-accent rotation-btn" data-degrees="180"><i class="fas fa-sync"></i> 180°</button>
+                            <button class="btn btn-warning rotation-btn" data-degrees="45"><i class="fas fa-redo-alt"></i> 45°</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3><i class="fas fa-arrows-alt"></i> Basic Flip</h3>
+                        <div class="flip-controls">
+                            <button class="btn flip-btn" data-direction="horizontal"><i class="fas fa-arrows-alt-h"></i> Horizontal</button>
+                            <button class="btn flip-btn" data-direction="vertical"><i class="fas fa-arrows-alt-v"></i> Vertical</button>
+                            <button class="btn btn-secondary flip-btn" data-direction="both"><i class="fas fa-arrows-alt"></i> Both</button>
+                            <button class="btn btn-accent flip-btn" data-direction="mirror"><i class="fas fa-clone"></i> Mirror</button>
+                        </div>
+                    </div>
+
+                    <div class="control-group">
+                        <h3><i class="fas fa-star"></i> Quick Effects</h3>
+                        <div class="preset-controls">
+                            <button class="btn btn-warning preset-btn" data-preset="grayscale"><i class="fas fa-moon"></i> Grayscale</button>
+                            <button class="btn preset-btn" data-preset="sepia"><i class="fas fa-sun"></i> Sepia</button>
+                            <button class="btn btn-secondary preset-btn" data-preset="invert"><i class="fas fa-adjust"></i> Invert</button>
+                            <button class="btn btn-accent preset-btn" data-preset="vintage"><i class="fas fa-camera-retro"></i> Vintage</button>
+                            <button class="btn btn-success preset-btn" data-preset="brighten"><i class="fas fa-sun"></i> Brighten</button>
+                            <button class="btn preset-btn" data-preset="reset-filters"><i class="fas fa-times"></i> Reset</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h3><i class="fas fa-compress-arrows-alt"></i> Compression</h3>
+                        <div class="compression-controls">
+                            <div class="compression-option">
+                                <input type="radio" id="low" name="compression" value="low" checked>
+                                <label for="low">High Quality</label>
+                                <span class="compression-details">90%</span>
+                            </div>
+                            <div class="compression-option">
+                                <input type="radio" id="medium" name="compression" value="medium">
+                                <label for="medium">Balanced</label>
+                                <span class="compression-details">70%</span>
+                            </div>
+                            <div class="compression-option">
+                                <input type="radio" id="high" name="compression" value="high">
+                                <label for="high">Small Size</label>
+                                <span class="compression-details">50%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="preview-section">
+                <h2 class="section-title"><i class="fas fa-eye"></i> Preview</h2>
+                
+                <div class="image-preview" id="imagePreview">
+                    <div style="text-align: center; color: #6C63FF;">
+                        <i class="fas fa-image" style="font-size: 48px; margin-bottom: 10px;"></i>
+                        <p>Your image will appear here</p>
+                    </div>
+                </div>
+                
+                <div class="image-info">
+                    <div class="info-item">
+                        <div class="info-label">Original</div>
+                        <div class="info-value" id="originalSize">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Optimized</div>
+                        <div class="info-value" id="optimizedSize">-</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Reduction</div>
+                        <div class="info-value" id="reduction">-</div>
+                    </div>
+                </div>
+                
+                <div class="action-buttons">
+                    <button class="btn btn-secondary" id="resetBtn"><i class="fas fa-undo-alt"></i> Reset</button>
+                    <button class="btn btn-success" id="downloadBtn" disabled><i class="fas fa-download"></i> Download</button>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Image Rotator & Flipper © 2023 | Transform your images with ease</p>
+        </footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const browseBtn = document.getElementById('browseBtn');
+            const imagePreview = document.getElementById('imagePreview');
+            const rotationBtns = document.querySelectorAll('.rotation-btn');
+            const flipBtns = document.querySelectorAll('.flip-btn');
+            const presetBtns = document.querySelectorAll('.preset-btn');
+            const compressionOptions = document.querySelectorAll('input[name="compression"]');
+            const resetBtn = document.getElementById('resetBtn');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const originalSizeEl = document.getElementById('originalSize');
+            const optimizedSizeEl = document.getElementById('optimizedSize');
+            const reductionEl = document.getElementById('reduction');
+            
+            // State variables
+            let originalImage = null;
+            let currentImage = null;
+            let currentRotation = 0;
+            let currentScaleX = 1;
+            let currentScaleY = 1;
+            let originalFileSize = 0;
+            let currentFileSize = 0;
+            let currentFilters = '';
+            let canvas = null;
+            let ctx = null;
+            
+            // Initialize canvas
+            function initCanvas() {
+                canvas = document.createElement('canvas');
+                ctx = canvas.getContext('2d');
+            }
+            
+            // Event Listeners
+            browseBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleFileDrop);
+            resetBtn.addEventListener('click', resetImage);
+            downloadBtn.addEventListener('click', downloadImage);
+            
+            // Add rotation and flip button event listeners
+            rotationBtns.forEach(btn => {
+                btn.addEventListener('click', () => rotateImage(parseInt(btn.dataset.degrees)));
+            });
+            
+            flipBtns.forEach(btn => {
+                btn.addEventListener('click', () => flipImage(btn.dataset.direction));
+            });
+            
+            // Preset buttons
+            presetBtns.forEach(btn => {
+                btn.addEventListener('click', () => applyPreset(btn.dataset.preset));
+            });
+            
+            // Compression option change listener
+            compressionOptions.forEach(option => {
+                option.addEventListener('change', updateCompression);
+            });
+            
+            // Initialize canvas
+            initCanvas();
+            
+            // Functions
+            function handleDragOver(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadArea.style.background = 'rgba(108, 99, 255, 0.15)';
+            }
+            
+            function handleFileDrop(e) {
+                e.preventDefault();
+                e.stopPropagation();
+                uploadArea.style.background = 'rgba(108, 99, 255, 0.05)';
+                
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    processFile(files[0]);
+                }
+            }
+            
+            function handleFileSelect(e) {
+                const files = e.target.files;
+                if (files.length > 0) {
+                    processFile(files[0]);
+                }
+            }
+            
+            function processFile(file) {
+                if (!file.type.match('image.*')) {
+                    alert('Please select an image file.');
+                    return;
+                }
+                
+                const reader = new FileReader();
+                
+                reader.onload = function(e) {
+                    originalImage = new Image();
+                    originalImage.onload = function() {
+                        displayImage(originalImage);
+                        originalFileSize = file.size;
+                        currentFileSize = file.size;
+                        updateFileInfo();
+                        downloadBtn.disabled = false;
+                    };
+                    originalImage.src = e.target.result;
+                };
+                
+                reader.readAsDataURL(file);
+            }
+            
+            function displayImage(img) {
+                imagePreview.innerHTML = '';
+                const imageElement = document.createElement('img');
+                imageElement.src = img.src;
+                imageElement.alt = 'Processed image';
+                imageElement.style.filter = currentFilters;
+                imagePreview.appendChild(imageElement);
+                currentImage = imageElement;
+                
+                // Reset transformations (but keep filters)
+                currentRotation = 0;
+                currentScaleX = 1;
+                currentScaleY = 1;
+                applyTransformations();
+            }
+            
+            function rotateImage(degrees) {
+                currentRotation += degrees;
+                applyTransformations();
+            }
+            
+            function flipImage(direction) {
+                switch(direction) {
+                    case 'horizontal':
+                        currentScaleX *= -1;
+                        break;
+                    case 'vertical':
+                        currentScaleY *= -1;
+                        break;
+                    case 'both':
+                        currentScaleX *= -1;
+                        currentScaleY *= -1;
+                        break;
+                    case 'mirror':
+                        // Create a mirror effect
+                        currentScaleX = -0.5;
+                        applyTransformations();
+                        setTimeout(() => {
+                            currentScaleX = 0.5;
+                            applyTransformations();
+                        }, 300);
+                        return;
+                }
+                applyTransformations();
+            }
+            
+            function applyPreset(preset) {
+                if (!currentImage) return;
+                
+                switch(preset) {
+                    case 'grayscale':
+                        currentFilters = 'grayscale(1)';
+                        break;
+                    case 'sepia':
+                        currentFilters = 'sepia(1)';
+                        break;
+                    case 'invert':
+                        currentFilters = 'invert(1)';
+                        break;
+                    case 'vintage':
+                        currentFilters = 'sepia(0.5) contrast(1.2) brightness(0.9)';
+                        break;
+                    case 'brighten':
+                        currentFilters = 'brightness(1.2) contrast(1.1)';
+                        break;
+                    case 'reset-filters':
+                        currentFilters = '';
+                        break;
+                }
+                
+                currentImage.style.filter = currentFilters;
+            }
+            
+            function applyTransformations() {
+                if (currentImage) {
+                    currentImage.style.transform = `
+                        rotate(${currentRotation}deg) 
+                        scaleX(${currentScaleX}) 
+                        scaleY(${currentScaleY})
+                    `;
+                }
+            }
+            
+            function updateCompression() {
+                if (!originalImage) return;
+                
+                const selectedCompression = document.querySelector('input[name="compression"]:checked').value;
+                let compressionFactor = 1;
+                
+                switch(selectedCompression) {
+                    case 'low':
+                        compressionFactor = 0.9;
+                        break;
+                    case 'medium':
+                        compressionFactor = 0.7;
+                        break;
+                    case 'high':
+                        compressionFactor = 0.5;
+                        break;
+                }
+                
+                currentFileSize = Math.round(originalFileSize * compressionFactor);
+                updateFileInfo();
+            }
+            
+            function updateFileInfo() {
+                if (originalFileSize > 0) {
+                    originalSizeEl.textContent = formatFileSize(originalFileSize);
+                    optimizedSizeEl.textContent = formatFileSize(currentFileSize);
+                    
+                    const reduction = ((originalFileSize - currentFileSize) / originalFileSize * 100).toFixed(1);
+                    reductionEl.textContent = `${reduction}%`;
+                    
+                    // Color code the reduction percentage
+                    if (reduction > 50) {
+                        reductionEl.style.color = 'var(--success)';
+                    } else if (reduction > 20) {
+                        reductionEl.style.color = 'var(--warning)';
+                    } else {
+                        reductionEl.style.color = 'var(--secondary)';
+                    }
+                }
+            }
+            
+            function formatFileSize(bytes) {
+                if (bytes < 1024) {
+                    return bytes + ' B';
+                } else if (bytes < 1048576) {
+                    return (bytes / 1024).toFixed(1) + ' KB';
+                } else {
+                    return (bytes / 1048576).toFixed(1) + ' MB';
+                }
+            }
+            
+            function resetImage() {
+                if (originalImage) {
+                    displayImage(originalImage);
+                    document.getElementById('low').checked = true;
+                    currentFilters = '';
+                    updateCompression();
+                }
+            }
+            
+            function downloadImage() {
+                if (!currentImage) return;
+                
+                const img = currentImage;
+                const width = img.naturalWidth;
+                const height = img.naturalHeight;
+                
+                canvas.width = width;
+                canvas.height = height;
+                
+                ctx.save();
+                ctx.translate(width / 2, height / 2);
+                ctx.rotate(currentRotation * Math.PI / 180);
+                ctx.scale(currentScaleX, currentScaleY);
+                ctx.drawImage(img, -width / 2, -height / 2, width, height);
+                ctx.restore();
+                
+                const selectedCompression = document.querySelector('input[name="compression"]:checked').value;
+                let quality = 1;
+                
+                switch(selectedCompression) {
+                    case 'low':
+                        quality = 0.9;
+                        break;
+                    case 'medium':
+                        quality = 0.7;
+                        break;
+                    case 'high':
+                        quality = 0.5;
+                        break;
+                }
+                
+                const dataURL = canvas.toDataURL('image/jpeg', quality);
+                
+                const link = document.createElement('a');
+                link.download = 'image-rotator-result.jpg';
+                link.href = dataURL;
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }
+        });
+    </script>
+</body>
+</html>
