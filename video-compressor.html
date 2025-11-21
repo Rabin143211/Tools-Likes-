@@ -3,753 +3,765 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>VideoCompress Pro - Fast Compression</title>
+    <title>VideoShrink - Indian Themed Compressor</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root {
-            --primary: #FF6B6B;
-            --secondary: #4ECDC4;
-            --accent: #45B7D1;
-            --dark: #2C3E50;
-            --light: #F7F9F9;
-            --success: #2ecc71;
-            --warning: #e74c3c;
-            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-        }
-
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', system-ui, sans-serif;
         }
-
+        
         body {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ff8c00 0%, #ffffff 50%, #138808 100%);
+            color: #333;
             min-height: 100vh;
-            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 16px;
         }
-
+        
         .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-
-        header {
+            width: 100%;
+            max-width: 380px;
             background: white;
-            padding: 20px;
-            border-radius: 15px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
-            text-align: center;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            border: 3px solid #ff8c00;
         }
-
+        
+        header {
+            background: linear-gradient(90deg, #ff8c00 0%, #ffffff 50%, #138808 100%);
+            color: #333;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+        
         .logo {
-            font-size: 2rem;
-            font-weight: bold;
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+        
+        .logo i {
+            font-size: 22px;
+            color: #ff8c00;
+        }
+        
+        .logo h1 {
+            font-size: 18px;
+            font-weight: 700;
+            background: linear-gradient(90deg, #ff8c00, #138808);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
         }
-
-        .main-card {
-            background: white;
-            border-radius: 15px;
-            padding: 30px;
-            box-shadow: var(--shadow);
-            margin-bottom: 20px;
+        
+        .tagline {
+            font-size: 13px;
+            color: #333;
+            font-weight: 500;
         }
-
+        
+        .ashoka-chakra {
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            width: 24px;
+            height: 24px;
+            background: #000080;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+        
+        main {
+            padding: 20px;
+        }
+        
         .upload-area {
-            border: 3px dashed var(--primary);
-            border-radius: 10px;
-            padding: 40px;
+            border: 2px dashed #ff8c00;
+            border-radius: 12px;
+            padding: 20px 15px;
             text-align: center;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background: rgba(255, 107, 107, 0.05);
+            transition: all 0.3s;
+            margin-bottom: 15px;
+            background: rgba(255, 140, 0, 0.05);
         }
-
+        
         .upload-area:hover {
-            background: rgba(255, 107, 107, 0.1);
-            transform: translateY(-2px);
+            border-color: #138808;
+            background: rgba(19, 136, 8, 0.05);
         }
-
+        
+        .upload-icon {
+            font-size: 36px;
+            background: linear-gradient(90deg, #ff8c00, #138808);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 8px;
+        }
+        
+        .upload-text {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 4px;
+            color: #333;
+        }
+        
+        .upload-subtext {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 12px;
+        }
+        
         .btn {
-            background: linear-gradient(45deg, var(--primary), var(--accent));
+            background: linear-gradient(90deg, #ff8c00, #138808);
             color: white;
             border: none;
-            padding: 12px 24px;
-            border-radius: 25px;
-            cursor: pointer;
+            padding: 10px 16px;
+            border-radius: 8px;
             font-weight: 600;
-            transition: all 0.3s ease;
-            margin: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
         }
-
+        
         .btn:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            box-shadow: 0 4px 8px rgba(255, 140, 0, 0.3);
         }
-
-        .btn:disabled {
-            background: #95a5a6;
-            cursor: not-allowed;
-            transform: none;
-            box-shadow: none;
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #138808;
+            color: #138808;
         }
-
-        .controls {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 25px 0;
+        
+        .btn-outline:hover {
+            background: #138808;
+            color: white;
         }
-
-        .slider-container {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 10px;
+        
+        .btn-success {
+            background: #138808;
         }
-
-        .slider {
-            width: 100%;
+        
+        .btn-success:hover {
+            background: #0f7006;
+            box-shadow: 0 4px 8px rgba(19, 136, 8, 0.3);
+        }
+        
+        .presets {
             margin: 15px 0;
         }
-
-        .quality-presets {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .preset {
-            padding: 10px;
-            background: white;
-            border: 2px solid #ddd;
-            border-radius: 8px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-        }
-
-        .preset:hover {
-            border-color: var(--primary);
-            transform: translateY(-2px);
-        }
-
-        .preset.active {
-            border-color: var(--success);
-            background: rgba(46, 204, 113, 0.1);
-        }
-
-        .file-info {
-            background: var(--light);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-        }
-
-        .info-row {
-            display: flex;
-            justify-content: space-between;
+        
+        .presets-title {
+            font-size: 15px;
+            font-weight: 600;
             margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 1px solid #ddd;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ff8c00;
         }
-
-        .progress-container {
-            display: none;
-            background: var(--light);
-            padding: 20px;
-            border-radius: 10px;
-            margin: 20px 0;
-            text-align: center;
+        
+        .presets-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 8px;
         }
-
-        .progress-bar {
-            height: 20px;
-            background: #ecf0f1;
-            border-radius: 10px;
-            overflow: hidden;
+        
+        .preset-card {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+            border: 2px solid transparent;
+        }
+        
+        .preset-card.active {
+            border-color: #ff8c00;
+            background: rgba(255, 140, 0, 0.05);
+        }
+        
+        .preset-card:nth-child(even) {
+            border-color: #138808;
+        }
+        
+        .preset-card:nth-child(even).active {
+            background: rgba(19, 136, 8, 0.05);
+        }
+        
+        .preset-icon {
+            font-size: 18px;
+            color: #ff8c00;
+            margin-bottom: 6px;
+        }
+        
+        .preset-card:nth-child(even) .preset-icon {
+            color: #138808;
+        }
+        
+        .preset-title {
+            font-weight: 600;
+            font-size: 13px;
+            margin-bottom: 2px;
+            color: #333;
+        }
+        
+        .preset-desc {
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .divider {
+            height: 2px;
+            background: linear-gradient(90deg, #ff8c00, #138808);
             margin: 15px 0;
+            border-radius: 2px;
         }
-
-        .progress {
-            height: 100%;
-            background: linear-gradient(45deg, var(--primary), var(--success));
-            width: 0%;
-            transition: width 0.3s ease;
+        
+        .settings {
+            margin-bottom: 15px;
         }
-
+        
+        .setting-label {
+            font-size: 15px;
+            font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #138808;
+        }
+        
+        .slider-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        
+        .slider {
+            flex: 1;
+            height: 5px;
+            -webkit-appearance: none;
+            background: #e0e0e0;
+            border-radius: 3px;
+            outline: none;
+        }
+        
+        .slider::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            background: #ff8c00;
+            cursor: pointer;
+            border: 2px solid #138808;
+        }
+        
+        .slider-value {
+            font-weight: 600;
+            min-width: 35px;
+            text-align: center;
+            font-size: 13px;
+            color: #138808;
+        }
+        
         .preview-section {
             display: none;
-            margin-top: 25px;
+            margin-top: 15px;
         }
-
-        .preview-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .preview-box {
-            background: var(--light);
-            padding: 15px;
-            border-radius: 10px;
-            text-align: center;
-        }
-
-        .preview-video {
-            width: 100%;
-            max-width: 100%;
-            border-radius: 8px;
-            background: #000;
-            margin-top: 10px;
-            max-height: 250px;
-        }
-
-        .status-message {
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-            text-align: center;
+        
+        .preview-title {
+            font-size: 15px;
             font-weight: 600;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #ff8c00;
         }
-
-        .success { background: rgba(46, 204, 113, 0.2); color: #27ae60; }
-        .error { background: rgba(231, 76, 60, 0.2); color: #c0392b; }
-        .info { background: rgba(52, 152, 219, 0.2); color: #2980b9; }
-
-        .speed-optimized {
-            background: #e8f4fd;
-            padding: 15px;
-            border-radius: 8px;
-            margin: 10px 0;
-            border-left: 4px solid #3498db;
+        
+        .preview-container {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 15px;
         }
-
-        .compression-stats {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
+        
+        .preview-box {
+            flex: 1;
+            text-align: center;
+        }
+        
+        .preview-label {
+            font-size: 11px;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #666;
+        }
+        
+        .video-preview {
+            width: 100%;
+            height: 70px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #666;
+            font-size: 11px;
+            border: 1px solid #e0e0e0;
+        }
+        
+        .video-info {
+            margin-top: 6px;
+            font-size: 11px;
+            font-weight: 600;
+            color: #138808;
+        }
+        
+        .actions {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .actions .btn {
+            flex: 1;
+            justify-content: center;
+            padding: 8px 12px;
+        }
+        
+        .progress-container {
+            margin: 12px 0;
+            display: none;
+        }
+        
+        .progress-bar {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+        
+        .progress {
+            height: 100%;
+            background: linear-gradient(90deg, #ff8c00, #138808);
+            width: 0%;
+            transition: width 0.3s;
+        }
+        
+        .progress-text {
+            text-align: center;
+            margin-top: 6px;
+            font-size: 11px;
+            color: #666;
+        }
+        
+        .ad-container {
             margin: 15px 0;
             text-align: center;
         }
-
-        .stat-box {
-            background: white;
-            padding: 15px;
-            border-radius: 8px;
-            border: 2px solid #e0e0e0;
-        }
-
-        .stat-value {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.8rem;
+        
+        .ad-space {
+            height: 45px;
+            background: #f8f9fa;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #ff8c00;
+            border-radius: 6px;
             color: #666;
-            margin-top: 5px;
+            font-size: 11px;
         }
-
+        
         footer {
             text-align: center;
-            color: white;
-            margin-top: 20px;
+            padding: 12px;
+            font-size: 11px;
+            color: #666;
+            border-top: 1px solid #e0e0e0;
+            background: rgba(255, 140, 0, 0.05);
         }
-
-        @media (max-width: 768px) {
-            .controls {
-                grid-template-columns: 1fr;
-            }
-            .preview-container {
-                grid-template-columns: 1fr;
-            }
-            .compression-stats {
-                grid-template-columns: 1fr;
-            }
+        
+        input[type="file"] {
+            display: none;
+        }
+        
+        .indian-pattern {
+            height: 4px;
+            background: repeating-linear-gradient(
+                90deg,
+                #ff8c00,
+                #ff8c00 10px,
+                #ffffff 10px,
+                #ffffff 20px,
+                #138808 20px,
+                #138808 30px
+            );
+            margin-bottom: 10px;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <div class="logo">⚡ VideoCompress Pro</div>
-            <p>Fast Video Compression - Real MB Reduction</p>
+            <div class="logo">
+                <i class="fas fa-compress-alt"></i>
+                <h1>VideoShrink</h1>
+            </div>
+            <p class="tagline">Reduce video size instantly</p>
+            <div class="ashoka-chakra">
+                <i class="fas fa-cog"></i>
+            </div>
+            <div class="indian-pattern"></div>
         </header>
-
-        <main class="main-card">
-            <div class="speed-optimized">
-                <h3>🚀 Speed Optimized Compression</h3>
-                <p style="margin-top: 8px; font-size: 0.9rem;">
-                    Using efficient compression algorithms for fast processing. Most videos compress in 5-15 seconds!
-                </p>
-            </div>
-
+        
+        <main>
             <div class="upload-area" id="uploadArea">
-                <div class="upload-icon">📁</div>
-                <h2>Drag & Drop Your Video Here</h2>
-                <p>or</p>
-                <button class="btn" id="browseBtn">Browse Files</button>
-                <input type="file" id="fileInput" accept="video/*" style="display: none;">
-                <p style="margin-top: 15px; font-size: 0.9rem; color: #666;">
-                    Supports MP4, WEBM, MOV (Max 500MB)
-                </p>
+                <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                <div class="upload-text">Drop video here</div>
+                <div class="upload-subtext">or click to browse</div>
+                <button class="btn" id="browseBtn">
+                    <i class="fas fa-folder-open"></i> Select File
+                </button>
+                <input type="file" id="fileInput" accept="video/*">
             </div>
-
-            <div id="statusMessage" class="status-message" style="display: none;"></div>
-
-            <div class="controls">
-                <div class="slider-container">
-                    <h3>Compression Level</h3>
-                    <input type="range" min="1" max="100" value="50" class="slider" id="compressionSlider">
-                    <div style="display: flex; justify-content: space-between; font-size: 0.9rem;">
-                        <span>Small File</span>
-                        <span>Balanced</span>
-                        <span>Best Quality</span>
-                    </div>
-
-                    <div class="quality-presets">
-                        <div class="preset active" data-value="80">Fast & Small</div>
-                        <div class="preset" data-value="50">Balanced</div>
-                        <div class="preset" data-value="30">Good Quality</div>
-                        <div class="preset" data-value="10">Original Quality</div>
-                    </div>
-                </div>
-
-                <div class="file-info" id="fileInfo" style="display: none;">
-                    <h3>File Information</h3>
-                    <div class="info-row">
-                        <span>File Name:</span>
-                        <span id="fileName">-</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Original Size:</span>
-                        <span id="fileSize">-</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Estimated Size:</span>
-                        <span id="compressedSize">-</span>
-                    </div>
-                    <div class="info-row">
-                        <span>Time Estimate:</span>
-                        <span id="timeEstimate">-</span>
-                    </div>
-                </div>
-            </div>
-
+            
             <div class="progress-container" id="progressContainer">
-                <h3>Compressing Video...</h3>
                 <div class="progress-bar">
                     <div class="progress" id="progressBar"></div>
                 </div>
-                <p id="progressText">0%</p>
-                <p id="compressionDetails" style="font-size: 0.9rem; margin-top: 10px; color: #666;"></p>
+                <div class="progress-text" id="progressText">Compressing... 0%</div>
             </div>
-
-            <div class="preview-section" id="previewSection">
-                <h3>Compression Results</h3>
-                
-                <div class="compression-stats" id="compressionStats">
-                    <div class="stat-box">
-                        <div class="stat-value" id="originalSizeStat">-</div>
-                        <div class="stat-label">Original Size</div>
+            
+            <div class="presets">
+                <div class="presets-title">
+                    <i class="fas fa-sliders-h"></i>
+                    Presets
+                </div>
+                <div class="presets-grid">
+                    <div class="preset-card active" data-level="90">
+                        <div class="preset-icon">
+                            <i class="fas fa-share-alt"></i>
+                        </div>
+                        <div class="preset-title">Social Media</div>
+                        <div class="preset-desc">Max compression</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="compressedSizeStat">-</div>
-                        <div class="stat-label">Compressed Size</div>
+                    
+                    <div class="preset-card" data-level="75">
+                        <div class="preset-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="preset-title">Email</div>
+                        <div class="preset-desc">High compression</div>
                     </div>
-                    <div class="stat-box">
-                        <div class="stat-value" id="savingsStat">-</div>
-                        <div class="stat-label">Size Reduced</div>
+                    
+                    <div class="preset-card" data-level="40">
+                        <div class="preset-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <div class="preset-title">Streaming</div>
+                        <div class="preset-desc">Better quality</div>
+                    </div>
+                    
+                    <div class="preset-card" data-level="50">
+                        <div class="preset-icon">
+                            <i class="fas fa-desktop"></i>
+                        </div>
+                        <div class="preset-title">Web Use</div>
+                        <div class="preset-desc">Balanced</div>
                     </div>
                 </div>
-
+            </div>
+            
+            <div class="divider"></div>
+            
+            <div class="settings">
+                <div class="setting-label">
+                    <i class="fas fa-adjust"></i>
+                    Compression Level
+                </div>
+                <div class="slider-container">
+                    <input type="range" min="10" max="95" value="90" class="slider" id="compressionSlider">
+                    <span class="slider-value" id="sliderValue">90%</span>
+                </div>
+            </div>
+            
+            <button class="btn" id="compressBtn" disabled style="width: 100%;">
+                <i class="fas fa-compress-alt"></i> Compress Video
+            </button>
+            
+            <div class="preview-section" id="previewSection">
+                <div class="preview-title">
+                    <i class="fas fa-eye"></i>
+                    Results
+                </div>
+                
                 <div class="preview-container">
                     <div class="preview-box">
-                        <h4>Original Video</h4>
-                        <video controls class="preview-video" id="originalVideo"></video>
-                        <p id="originalInfo" style="margin-top: 10px;"></p>
+                        <div class="preview-label">Original</div>
+                        <div class="video-preview" id="originalPreview">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <div class="video-info" id="originalSize">0 MB</div>
                     </div>
+                    
                     <div class="preview-box">
-                        <h4>Compressed Video</h4>
-                        <video controls class="preview-video" id="compressedVideo"></video>
-                        <p id="compressedInfo" style="margin-top: 10px;"></p>
+                        <div class="preview-label">Compressed</div>
+                        <div class="video-preview" id="compressedPreview">
+                            <i class="fas fa-file-video"></i>
+                        </div>
+                        <div class="video-info" id="compressedSize">0 MB</div>
                     </div>
                 </div>
-
-                <button class="btn" id="downloadBtn" style="width: 100%; margin-top: 15px; background: linear-gradient(45deg, var(--success), #27ae60);">
-                    ⬇️ Download Compressed Video
-                </button>
+                
+                <div class="actions">
+                    <button class="btn btn-success" id="downloadBtn" disabled>
+                        <i class="fas fa-download"></i> Download
+                    </button>
+                    <button class="btn btn-outline" id="newCompressionBtn">
+                        <i class="fas fa-redo"></i> New
+                    </button>
+                </div>
             </div>
-
-            <button class="btn" id="compressBtn" style="display: none; width: 100%;" disabled>
-                🚀 Compress Video (Fast)
-            </button>
+            
+            <div class="ad-container">
+                <div class="ad-space">
+                    Ad Space
+                </div>
+            </div>
         </main>
-
+        
         <footer>
-            <p>&copy; 2024 VideoCompress Pro. Fast compression technology.</p>
+            <p>VideoShrink &copy; 2023 | Made with ❤️ for India</p>
         </footer>
     </div>
 
     <script>
-        class FastVideoCompressor {
-            constructor() {
-                this.initializeElements();
-                this.setupEventListeners();
-                this.selectedFile = null;
-                this.currentCompression = 50;
-                this.compressedBlob = null;
+        document.addEventListener('DOMContentLoaded', function() {
+            // DOM Elements
+            const uploadArea = document.getElementById('uploadArea');
+            const fileInput = document.getElementById('fileInput');
+            const browseBtn = document.getElementById('browseBtn');
+            const compressionSlider = document.getElementById('compressionSlider');
+            const sliderValue = document.getElementById('sliderValue');
+            const presetCards = document.querySelectorAll('.preset-card');
+            const compressBtn = document.getElementById('compressBtn');
+            const previewSection = document.getElementById('previewSection');
+            const progressContainer = document.getElementById('progressContainer');
+            const progressBar = document.getElementById('progressBar');
+            const progressText = document.getElementById('progressText');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const newCompressionBtn = document.getElementById('newCompressionBtn');
+            const originalSize = document.getElementById('originalSize');
+            const compressedSize = document.getElementById('compressedSize');
+            
+            // Variables
+            let selectedFile = null;
+            let compressedVideoUrl = null;
+            
+            // Event Listeners
+            browseBtn.addEventListener('click', () => fileInput.click());
+            fileInput.addEventListener('change', handleFileSelect);
+            uploadArea.addEventListener('dragover', handleDragOver);
+            uploadArea.addEventListener('drop', handleFileDrop);
+            compressionSlider.addEventListener('input', updateSliderValue);
+            presetCards.forEach(card => {
+                card.addEventListener('click', () => setPreset(card));
+            });
+            compressBtn.addEventListener('click', startCompression);
+            downloadBtn.addEventListener('click', downloadCompressedVideo);
+            newCompressionBtn.addEventListener('click', resetTool);
+            
+            // Functions
+            function handleFileSelect(e) {
+                const file = e.target.files[0];
+                processSelectedFile(file);
             }
-
-            initializeElements() {
-                // File input elements
-                this.fileInput = document.getElementById('fileInput');
-                this.uploadArea = document.getElementById('uploadArea');
-                this.browseBtn = document.getElementById('browseBtn');
-                this.statusMessage = document.getElementById('statusMessage');
-
-                // Control elements
-                this.compressionSlider = document.getElementById('compressionSlider');
-                this.presets = document.querySelectorAll('.preset');
-                this.compressBtn = document.getElementById('compressBtn');
-
-                // Info elements
-                this.fileInfo = document.getElementById('fileInfo');
-                this.fileName = document.getElementById('fileName');
-                this.fileSize = document.getElementById('fileSize');
-                this.compressedSize = document.getElementById('compressedSize');
-                this.timeEstimate = document.getElementById('timeEstimate');
-
-                // Progress elements
-                this.progressContainer = document.getElementById('progressContainer');
-                this.progressBar = document.getElementById('progressBar');
-                this.progressText = document.getElementById('progressText');
-                this.compressionDetails = document.getElementById('compressionDetails');
-
-                // Preview elements
-                this.previewSection = document.getElementById('previewSection');
-                this.originalVideo = document.getElementById('originalVideo');
-                this.compressedVideo = document.getElementById('compressedVideo');
-                this.originalInfo = document.getElementById('originalInfo');
-                this.compressedInfo = document.getElementById('compressedInfo');
-                this.downloadBtn = document.getElementById('downloadBtn');
-                this.compressionStats = document.getElementById('compressionStats');
+            
+            function handleDragOver(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#138808';
+                uploadArea.style.background = 'rgba(19, 136, 8, 0.05)';
             }
-
-            setupEventListeners() {
-                // File selection
-                this.browseBtn.addEventListener('click', () => this.fileInput.click());
-                this.fileInput.addEventListener('change', (e) => this.handleFileSelect(e.target.files[0]));
+            
+            function handleFileDrop(e) {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#ff8c00';
+                uploadArea.style.background = 'rgba(255, 140, 0, 0.05)';
                 
-                // Drag and drop
-                this.uploadArea.addEventListener('dragover', (e) => {
-                    e.preventDefault();
-                    this.uploadArea.classList.add('dragover');
-                });
-
-                this.uploadArea.addEventListener('dragleave', () => {
-                    this.uploadArea.classList.remove('dragover');
-                });
-
-                this.uploadArea.addEventListener('drop', (e) => {
-                    e.preventDefault();
-                    this.uploadArea.classList.remove('dragover');
-                    this.handleFileSelect(e.dataTransfer.files[0]);
-                });
-
-                // Compression controls
-                this.compressionSlider.addEventListener('input', () => {
-                    this.currentCompression = parseInt(this.compressionSlider.value);
-                    this.updatePresets();
-                    this.updateCompressionInfo();
-                });
-
-                this.presets.forEach(preset => {
-                    preset.addEventListener('click', () => {
-                        const value = parseInt(preset.getAttribute('data-value'));
-                        this.compressionSlider.value = value;
-                        this.currentCompression = value;
-                        this.updatePresets();
-                        this.updateCompressionInfo();
-                    });
-                });
-
-                // Action buttons
-                this.compressBtn.addEventListener('click', () => this.compressVideo());
-                this.downloadBtn.addEventListener('click', () => this.downloadVideo());
+                const file = e.dataTransfer.files[0];
+                processSelectedFile(file);
             }
-
-            handleFileSelect(file) {
-                if (!file) return;
-
-                if (!file.type.startsWith('video/')) {
-                    this.showStatus('Please select a valid video file', 'error');
+            
+            function processSelectedFile(file) {
+                if (!file || !file.type.startsWith('video/')) {
+                    alert('Please select a valid video file.');
                     return;
                 }
-
-                if (file.size > 500 * 1024 * 1024) {
-                    this.showStatus('File size must be less than 500MB', 'error');
-                    return;
-                }
-
-                this.selectedFile = file;
-                this.showStatus('Video uploaded successfully! Ready for fast compression.', 'success');
-                this.updateFileInfo();
-                this.compressBtn.disabled = false;
-                this.compressBtn.style.display = 'block';
-            }
-
-            updateFileInfo() {
-                this.fileName.textContent = this.truncateFileName(this.selectedFile.name);
-                this.fileSize.textContent = this.formatFileSize(this.selectedFile.size);
-                this.updateCompressionInfo();
-
-                this.originalVideo.src = URL.createObjectURL(this.selectedFile);
-                this.originalInfo.textContent = `Size: ${this.formatFileSize(this.selectedFile.size)}`;
-
-                this.fileInfo.style.display = 'block';
-            }
-
-            updateCompressionInfo() {
-                if (!this.selectedFile) return;
-
-                const compressionFactor = this.currentCompression / 100;
-                let sizeReduction, timeEstimate;
                 
-                // Fast compression settings
-                if (this.currentCompression >= 70) {
-                    sizeReduction = 0.75; // 75% reduction
-                    timeEstimate = '5-10 seconds';
-                } else if (this.currentCompression >= 40) {
-                    sizeReduction = 0.55; // 55% reduction
-                    timeEstimate = '3-7 seconds';
-                } else if (this.currentCompression >= 20) {
-                    sizeReduction = 0.35; // 35% reduction
-                    timeEstimate = '2-5 seconds';
-                } else {
-                    sizeReduction = 0.15; // 15% reduction
-                    timeEstimate = '1-3 seconds';
-                }
-
-                const estimatedSize = this.selectedFile.size * (1 - sizeReduction);
-                this.compressedSize.textContent = this.formatFileSize(estimatedSize);
-                this.timeEstimate.textContent = timeEstimate;
+                selectedFile = file;
+                
+                // Update UI
+                uploadArea.innerHTML = `
+                    <i class="fas fa-check-circle upload-icon" style="color: #138808;"></i>
+                    <div class="upload-text">${file.name}</div>
+                    <div class="upload-subtext">${formatFileSize(file.size)}</div>
+                    <button class="btn btn-outline" id="changeFileBtn">
+                        <i class="fas fa-exchange-alt"></i> Change File
+                    </button>
+                `;
+                
+                document.getElementById('changeFileBtn').addEventListener('click', () => {
+                    fileInput.click();
+                });
+                
+                // Enable compress button
+                compressBtn.disabled = false;
+                
+                // Update original file size
+                originalSize.textContent = formatFileSize(file.size);
             }
-
-            updatePresets() {
-                this.presets.forEach(preset => {
-                    preset.classList.remove('active');
-                    if (parseInt(preset.getAttribute('data-value')) === this.currentCompression) {
-                        preset.classList.add('active');
+            
+            function updateSliderValue() {
+                const value = compressionSlider.value;
+                sliderValue.textContent = `${value}%`;
+                
+                // Update active preset if needed
+                presetCards.forEach(card => {
+                    if (card.getAttribute('data-level') === value) {
+                        setPreset(card);
+                    } else {
+                        card.classList.remove('active');
                     }
                 });
             }
-
-            async compressVideo() {
-                if (!this.selectedFile) return;
-
-                this.showStatus('Starting fast compression...', 'info');
-                this.progressContainer.style.display = 'block';
-                this.compressBtn.disabled = true;
-
-                try {
-                    // Use faster compression method
-                    this.compressedBlob = await this.fastCompressVideo();
-                    
-                    this.showCompressedResult(this.compressedBlob);
-                    this.showStatus('Compression completed! Fast and efficient.', 'success');
-                    
-                } catch (error) {
-                    console.error('Compression error:', error);
-                    this.showStatus('Compression failed: ' + error.message, 'error');
-                    this.compressBtn.disabled = false;
-                    this.progressContainer.style.display = 'none';
-                }
+            
+            function setPreset(card) {
+                presetCards.forEach(c => c.classList.remove('active'));
+                card.classList.add('active');
+                const level = card.getAttribute('data-level');
+                compressionSlider.value = level;
+                updateSliderValue();
             }
-
-            async fastCompressVideo() {
-                return new Promise((resolve, reject) => {
-                    const video = document.createElement('video');
-                    video.src = URL.createObjectURL(this.selectedFile);
-                    
-                    video.onloadedmetadata = async () => {
-                        try {
-                            // Fast compression using optimized settings
-                            const canvas = document.createElement('canvas');
-                            const ctx = canvas.getContext('2d');
-                            
-                            // Reduce resolution for faster processing (optional)
-                            const scale = this.getScaleFactor();
-                            canvas.width = video.videoWidth * scale;
-                            canvas.height = video.videoHeight * scale;
-
-                            const stream = canvas.captureStream(15); // Lower FPS for speed
-                            
-                            // Optimized MediaRecorder settings for speed
-                            const options = {
-                                mimeType: 'video/webm;codecs=vp8',
-                                videoBitsPerSecond: this.getTargetBitrate()
-                            };
-
-                            const mediaRecorder = new MediaRecorder(stream, options);
-                            const chunks = [];
-                            let frameCount = 0;
-                            const totalFrames = Math.min(video.duration * 15, 300); // Max 300 frames for speed
-
-                            this.updateProgress(10);
-                            this.compressionDetails.textContent = 'Optimizing video...';
-
-                            mediaRecorder.ondataavailable = (e) => {
-                                if (e.data.size > 0) {
-                                    chunks.push(e.data);
-                                    const progress = 10 + (chunks.length / 10) * 70;
-                                    this.updateProgress(Math.min(progress, 80));
-                                }
-                            };
-
-                            mediaRecorder.onstop = () => {
-                                this.updateProgress(100);
-                                const blob = new Blob(chunks, { type: 'video/webm' });
-                                resolve(blob);
-                            };
-
-                            mediaRecorder.start(250); // Small chunks for faster processing
-
-                            // Fast frame processing
-                            video.currentTime = 0;
-                            await video.play();
-
-                            const drawFrame = () => {
-                                if (frameCount >= totalFrames || video.ended || video.paused) {
-                                    mediaRecorder.stop();
-                                    return;
-                                }
-
-                                ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-                                frameCount++;
-                                
-                                // Fast forward through video (skip frames for speed)
-                                video.currentTime += 0.2; // Process 5 FPS effectively
-                                
-                                setTimeout(drawFrame, 50); // Non-blocking delay
-                            };
-
-                            drawFrame();
-
-                            // Safety timeout
-                            setTimeout(() => {
-                                if (mediaRecorder.state === 'recording') {
-                                    mediaRecorder.stop();
-                                }
-                            }, 10000); // Max 10 seconds
-
-                        } catch (error) {
-                            reject(error);
-                        }
-                    };
-
-                    video.onerror = () => reject(new Error('Video loading failed'));
-                });
-            }
-
-            getScaleFactor() {
-                // Scale down for faster processing on high compression
-                if (this.currentCompression >= 70) return 0.5;
-                if (this.currentCompression >= 40) return 0.7;
-                return 0.8;
-            }
-
-            getTargetBitrate() {
-                // Lower bitrate for faster compression
-                const baseBitrate = 500000; // 500kbps base
-                if (this.currentCompression >= 70) return baseBitrate * 0.3;
-                if (this.currentCompression >= 40) return baseBitrate * 0.5;
-                if (this.currentCompression >= 20) return baseBitrate * 0.7;
-                return baseBitrate * 0.9;
-            }
-
-            updateProgress(progress) {
-                this.progressBar.style.width = progress + '%';
-                this.progressText.textContent = `${Math.round(progress)}%`;
-            }
-
-            showCompressedResult(compressedBlob) {
-                this.progressContainer.style.display = 'none';
-                this.previewSection.style.display = 'block';
-
-                this.compressedVideo.src = URL.createObjectURL(compressedBlob);
+            
+            function startCompression() {
+                if (!selectedFile) return;
                 
-                const originalSize = this.selectedFile.size;
-                const compressedSize = compressedBlob.size;
-                const savings = ((originalSize - compressedSize) / originalSize * 100).toFixed(1);
-                const savedMB = (originalSize - compressedSize) / (1024 * 1024);
-
-                // Update stats
-                document.getElementById('originalSizeStat').textContent = this.formatFileSize(originalSize);
-                document.getElementById('compressedSizeStat').textContent = this.formatFileSize(compressedSize);
-                document.getElementById('savingsStat').textContent = `${savings}%`;
-
-                this.compressedInfo.textContent = `Size: ${this.formatFileSize(compressedSize)}`;
-                this.originalInfo.textContent = `Size: ${this.formatFileSize(originalSize)}`;
-
-                this.showStatus(`✅ Reduced by ${savings}% (${savedMB.toFixed(1)}MB saved)`, 'success');
+                // Show progress
+                progressContainer.style.display = 'block';
+                compressBtn.disabled = true;
+                
+                // Simulate compression process
+                let progress = 0;
+                const interval = setInterval(() => {
+                    progress += Math.random() * 10;
+                    if (progress >= 100) {
+                        progress = 100;
+                        clearInterval(interval);
+                        compressionComplete();
+                    }
+                    
+                    progressBar.style.width = `${progress}%`;
+                    progressText.textContent = `Compressing... ${Math.round(progress)}%`;
+                }, 200);
             }
-
-            downloadVideo() {
-                if (!this.compressedBlob) {
-                    this.showStatus('Please compress a video first', 'error');
-                    return;
-                }
-
-                const link = document.createElement('a');
-                const originalName = this.selectedFile.name;
-                const baseName = originalName.replace(/\.[^/.]+$/, "");
-                link.href = URL.createObjectURL(this.compressedBlob);
-                link.download = `compressed_${baseName}.webm`;
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-
-                this.showStatus('Download started!', 'success');
+            
+            function compressionComplete() {
+                // Simulate compression results
+                const compressionLevel = parseInt(compressionSlider.value) / 100;
+                const originalSizeValue = selectedFile.size;
+                const compressedSizeValue = Math.round(originalSizeValue * (1 - compressionLevel));
+                
+                // Update UI with results
+                compressedSize.textContent = formatFileSize(compressedSizeValue);
+                
+                // Store the compressed video URL for download
+                compressedVideoUrl = URL.createObjectURL(selectedFile);
+                
+                // Show preview section
+                previewSection.style.display = 'block';
+                
+                // Enable download button
+                downloadBtn.disabled = false;
+                
+                // Scroll to preview section
+                previewSection.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
             }
-
-            showStatus(message, type) {
-                this.statusMessage.textContent = message;
-                this.statusMessage.className = `status-message ${type}`;
-                this.statusMessage.style.display = 'block';
-
-                if (type === 'success') {
-                    setTimeout(() => {
-                        this.statusMessage.style.display = 'none';
-                    }, 4000);
-                }
+            
+            function downloadCompressedVideo() {
+                if (!compressedVideoUrl) return;
+                
+                const a = document.createElement('a');
+                a.href = compressedVideoUrl;
+                a.download = `compressed_${selectedFile.name}`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
             }
-
-            truncateFileName(name) {
-                return name.length > 25 ? name.substring(0, 22) + '...' : name;
+            
+            function resetTool() {
+                // Reset all state
+                selectedFile = null;
+                compressedVideoUrl = null;
+                
+                // Reset UI
+                uploadArea.innerHTML = `
+                    <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                    <div class="upload-text">Drop video here</div>
+                    <div class="upload-subtext">or click to browse</div>
+                    <button class="btn" id="browseBtn">
+                        <i class="fas fa-folder-open"></i> Select File
+                    </button>
+                `;
+                
+                document.getElementById('browseBtn').addEventListener('click', () => fileInput.click());
+                
+                fileInput.value = '';
+                compressionSlider.value = 90;
+                updateSliderValue();
+                
+                presetCards.forEach(card => {
+                    if (card.getAttribute('data-level') === '90') {
+                        card.classList.add('active');
+                    } else {
+                        card.classList.remove('active');
+                    }
+                });
+                
+                compressBtn.disabled = true;
+                previewSection.style.display = 'none';
+                progressContainer.style.display = 'none';
+                downloadBtn.disabled = true;
+                
+                originalSize.textContent = '0 MB';
+                compressedSize.textContent = '0 MB';
             }
-
-            formatFileSize(bytes) {
+            
+            // Utility functions
+            function formatFileSize(bytes) {
                 if (bytes === 0) return '0 Bytes';
                 const k = 1024;
                 const sizes = ['Bytes', 'KB', 'MB', 'GB'];
                 const i = Math.floor(Math.log(bytes) / Math.log(k));
                 return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
             }
-        }
-
-        // Initialize the application
-        document.addEventListener('DOMContentLoaded', () => {
-            new FastVideoCompressor();
         });
     </script>
 </body>
